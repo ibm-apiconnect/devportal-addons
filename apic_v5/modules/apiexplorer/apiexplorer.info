@@ -1,0 +1,8 @@
+name = API Explorer
+description = Use API Explorer to render APIs
+package = "IBM API Connect"
+core = 7.x
+dependencies[] = api
+
+version = 1.0
+

@@ -1,0 +1,191 @@
+<?php
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * This is where we do all the actual work to load Explorer and feed through the right data
+ *
+ * @param $variables
+ */
+function apiexplorer_preprocess_node(&$variables) {
+  global $user;
+  global $language;
+
+  if ($variables['node']->type == 'api' && $variables['view_mode'] == 'inner') {
+    // ensure the right template is loaded
+    $variables['theme_hook_suggestions'][] = 'node__api__inner';
+
+    // set up page config needed for explorer
+    if (isset($user->uid)) {
+      // need fully populated user object
+      $user = user_load($user->uid);
+    }
+    $codesnippets = variable_get('ibm_apim_codesnippets', array(
+      'curl' => 1,
+      'ruby' => 1,
+      'python' => 1,
+      'php' => 1,
+      'java' => 1,
+      'node' => 1,
+      'go' => 1,
+      'swift' => 1,
+      'c' => 0,
+      'csharp' => 0
+    ));
+    $first_enabled = NULL;
+    $codesnippet_langs = array();
+    foreach ($codesnippets as $lang => $enabled) {
+      if ($enabled) {
+        $codesnippet_langs[] = $lang;
+        if ($first_enabled === NULL) {
+          $first_enabled = $lang;
+        }
+      }
+    }
+
+    // if user has set a preference and its an enabled language then honour it
+    if (isset($user->uid) && isset($user->field_codesnippet['und'][0]['value'])) {
+      $default_codesnippet_lang = $user->field_codesnippet['und'][0]['value'];
+    }
+    // if user's default lang not set or is not one of the enabled ones then default to first enabled
+    if (!isset($default_codesnippet_lang) || !empty($default_codesnippet_lang) || !in_array($default_codesnippet_lang, $codesnippet_langs)) {
+      $default_codesnippet_lang = $first_enabled;
+    }
+    // Get the actual OpenAPI document
+    $api = null;
+    if (isset($variables['api_resources']['und'])) {
+      $api = unserialize($variables['api_resources']['und'][0]['value']);
+    }
+    else {
+      $api = unserialize($variables['api_resources'][0]['value']);
+    }
+    // get list of current apps
+    $applications = array();
+    if (user_is_logged_in() && $user->uid != 1) {
+      if (module_exists('application')) {
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'application')
+          ->fieldCondition('application_orgid', 'value', ibm_apim_get_current_developer_org()['id']);
+        $results = $query->execute();
+        if (isset($results['node'])) {
+          $nids = array();
+          foreach ($results['node'] as $item) {
+            $nids[] = $item->nid;
+          }
+          $nodes = node_load_multiple($nids);
+          $credentials = array();
+          foreach ($nodes as $node) {
+            $node_appCredentials = unserialize($node->application_credentials[$node->language][0]['value']);
+            if (isset($node_appCredentials) && !empty($node_appCredentials)) {
+              foreach ($node_appCredentials as $cred) {
+                $credentials[] = array(
+                  'client_id' => $cred['client_id'],
+                  'description' => $cred['description']
+                );
+              }
+              $redirectUris = array();
+              if (isset($node->application_oauthredirecturi[$node->language][0]['value'])) {
+                $redirectUris[] = $node->application_oauthredirecturi[$node->language][0]['value'];
+              }
+              $applications[] = array(
+                'name' => $node->title,
+                'summary' => $node->application_description[$node->language][0]['value'],
+                'redirectUri' => $redirectUris,
+                'credentials' => $credentials,
+              );
+            }
+          }
+        }
+      }
+    }
+    // Feed data through to the explorer JS from PHP via DrupalSettings
+    drupal_add_js(array(
+      'api' => array(
+        'explorer' => array(
+          'apis' => array($api),
+          'apps' => $applications,
+          'options' => array(
+            'showApiVersion' => variable_get('ibm_apim_show_versions', 1),
+            'showCorsWarnings' => 1,
+            'showSoapSwaggerDownload' => variable_get('ibm_apim_soap_swagger_download', FALSE),
+            'showSoapCodeSnippets' => variable_get('ibm_apim_soap_codesnippets', FALSE),
+            'languages' => $codesnippet_langs,
+            'defaultLanguage' => $default_codesnippet_lang,
+            'tryIt' => variable_get('ibm_apim_enable_api_test', 1),
+            'onReady' => 'portalExplorerReady',
+            'explorerDir' => base_path() . drupal_get_path('module', 'apiexplorer') . '/explorer/app/',
+            'locale' => _ibm_apim_convert_lang_name($language->language),
+            'loggedIn' => user_is_logged_in(),
+            'loginLink' => base_path() . 'user/login',
+            'isApicPortal' => TRUE,
+            'apicPortalUserId' => $user->uid,
+            'apicPortalNewAppLink' => base_path() . 'application/new'
+          )
+        )
+      ),
+    ), 'setting');
+
+    // load the explorer JS and CSS
+    if (file_exists(drupal_get_path('module', 'apiexplorer') . '/explorer/app/asset-manifest.json')) {
+      $string = file_get_contents(drupal_get_path('module', 'apiexplorer') . '/explorer/app/asset-manifest.json');
+      $json = json_decode($string, TRUE);
+      if (isset($json['main.js']) && file_get_contents(drupal_get_path('module', 'apiexplorer') . '/explorer/app/' . $json['main.js'])) {
+        drupal_add_js(drupal_get_path('module', 'apiexplorer') . '/explorer/app/' . $json['main.js'], array(
+          'weight' => 3,
+          'minified' => TRUE,
+          'preprocess' => FALSE
+        ));
+        drupal_add_css(drupal_get_path('module', 'apiexplorer') . '/explorer/app/css/explorer.css');
+      }
+    }
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ * Tell Drupal that we have template files for the content types that we define in the module.
+ * A theme can override these template files if it wishes to do so, but we include them
+ * in our module so that the nodes render correctly when used with a theme that doesn't know
+ * about them.
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function apiexplorer_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $templates_path = drupal_get_path('module', 'apiexplorer') . '/templates';
+  $theme['node__api'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--api',
+    'path' => $templates_path
+  );
+  $theme['node__api__inner'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--api--inner',
+    'path' => $templates_path
+  );
+
+  return $theme;
+}
+
+
+/**
+ * We need our module to run last so we can override what the 'api' module does
+ *
+ * @param $implementations
+ * @param $hook
+ */
+function apiexplorer_module_implements_alter(&$implementations, $hook) {
+  if (isset($implementations['apiexplorer'])) {
+    $group = $implementations['apiexplorer'];
+    unset($implementations['apiexplorer']);
+    $implementations['apiexplorer'] = $group;
+  }
+}

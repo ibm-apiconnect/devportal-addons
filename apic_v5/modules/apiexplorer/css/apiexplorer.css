@@ -1,0 +1,65 @@
+.mesh-portal-product .truncate {
+  position: inherit;
+}
+
+.bx--global-light-ui {
+  color: #152935;
+  background-color: #f5f7fa;
+}
+
+.node-type-api footer {
+  display: none;
+}
+
+.explorerWrapper {
+  position: relative;
+  min-height: calc(100vh - 148px);
+}
+
+body.admin-menu .explorerWrapper {
+  min-height: calc(100vh - 228px);
+}
+
+article.node-api {
+  margin-bottom: 0;
+}
+article header.titleSection {
+  border-bottom: 1px solid #dfe3e6;
+  background: white;
+  padding: 0.625rem 3rem;
+  display: block;
+}
+
+header.titleSection .titleInnerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+header.titleSection .apicApiIcon,
+header.titleSection .field-name-field-apirating {
+  display: inline-block;
+}
+header.titleSection .apicApiIcon {
+  padding-right: 10px;
+}
+
+header.titleSection .field-name-field-apirating .description {
+  display: none;
+}
+
+header.titleSection .apicApiIcon img {
+  width: 48px;
+}
+
+.titleSection .productTitle .productName {
+  display: inline-block;
+  font-weight: lighter;
+  vertical-align: text-bottom;
+  margin-top: 0;
+}
+
+.titleSection .productName .field--name-apic-rating,
+.apicProduct .node__title .field--name-apic-rating {
+  display: inline-block;
+}
