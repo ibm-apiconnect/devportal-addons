@@ -80,7 +80,7 @@ function apiexplorer_preprocess_node(&$variables) {
             if (isset($node_appCredentials) && !empty($node_appCredentials)) {
               foreach ($node_appCredentials as $cred) {
                 $credentials[] = array(
-                  'client_id' => $cred['client_id'],
+                  'client_id' => $cred['client-id'],
                   'description' => $cred['description']
                 );
               }
