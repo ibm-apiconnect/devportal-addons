@@ -59,6 +59,9 @@ function apiexplorer_preprocess_node(&$variables) {
     else {
       $api = unserialize($variables['api_resources'][0]['value']);
     }
+    if (isset($api) && !empty($api)) {
+      $api = apiexplorer_remove_empty_elements($api);
+    }
     // get list of current apps
     $applications = array();
     if (user_is_logged_in() && $user->uid != 1) {
@@ -188,4 +191,81 @@ function apiexplorer_module_implements_alter(&$implementations, $hook) {
     unset($implementations['apiexplorer']);
     $implementations['apiexplorer'] = $group;
   }
+}
+
+/**
+ * This function exists to avoid issues caused by the json {} and [] looking the same in PHP!
+ * Only option is to remove them from the structure.
+ *
+ * @param $yaml
+ * @return mixed
+ */
+function apiexplorer_remove_empty_elements($yaml) {
+  if (isset($yaml)) {
+    // if empty securityDefinitions and others then needs to be stdClass not array
+    foreach (array(
+               'securityDefinitions',
+               'responses',
+               'parameters',
+               'definitions',
+               'paths',
+               'contact',
+               'license'
+             ) as $key) {
+      if (isset($yaml[$key])) {
+        if (is_array($yaml[$key]) && empty($yaml[$key])) {
+          unset($yaml[$key]);
+        } elseif (is_array($yaml[$key])) {
+          $yaml[$key] = apiexplorer_tidyYaml($yaml[$key]);
+        }
+      }
+    }
+    if (isset($yaml['paths'])) {
+      foreach ($yaml['paths'] as $pathname => $path) {
+        foreach ($path as $verb => $op) {
+          if (isset($op['responses'])) {
+            foreach ($op['responses'] as $code => $response) {
+              $yaml['paths'][$pathname][$verb]['responses'][$code] = apiexplorer_tidyYaml($yaml['paths'][$pathname][$verb]['responses'][$code]);
+            }
+          }
+        }
+      }
+    }
+  }
+  return $yaml;
+}
+
+/**
+ * Utility method to recurse through the yaml doc and tidy up trailing empty objects / empty arrays
+ *
+ * @param $yaml
+ * @return array
+ */
+function apiexplorer_tidyYaml(&$yaml) {
+  unset($prop);
+  if (is_array($yaml)) {
+    foreach ($yaml as $prop => $value) {
+      if ($prop == 'schema') {
+        if (is_array($yaml[$prop]) && empty($yaml[$prop])) {
+          unset($yaml[$prop]);
+        } elseif (is_array($yaml[$prop])) {
+          $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
+        }
+      }
+      elseif ($prop == 'properties') {
+        if (is_array($yaml[$prop]) && empty($yaml[$prop])) {
+          unset($yaml[$prop]);
+          // handle empty objects now we've removed possibly their only attribute
+          if (is_array($yaml) && empty($yaml)) {
+            $yaml['type'] = 'object';
+          }
+        } elseif (is_array($yaml[$prop])) {
+          $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
+        }
+      } elseif (is_array($yaml[$prop])) {
+        $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
+      }
+    }
+  }
+  return $yaml;
 }
