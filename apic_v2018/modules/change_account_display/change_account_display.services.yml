@@ -1,0 +1,5 @@
+services:
+  change_account_display.route_subscriber:
+    class: Drupal\change_account_display\Routing\UsernameRouteSubscriber
+    tags:
+      - { name: event_subscriber }

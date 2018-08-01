@@ -1,0 +1,7 @@
+name = Change Account Display
+description = Display firstname lastname instead of username
+package = "Custom"
+core = 7.x
+
+version = 1.0
+
