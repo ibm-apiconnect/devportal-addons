@@ -1,0 +1,10 @@
+name: 'IBM APIC Portal - user field example'
+type: module
+description: 'IBM API Connect Developer Portal tutorial - Example of validating a custom user field'
+package: 'Custom'
+core: 8.x
+version: '8.x-1.0.0'
+project: 'user_field_example'
+dependencies:
+  - ibm_apim
+  - auth_apic
