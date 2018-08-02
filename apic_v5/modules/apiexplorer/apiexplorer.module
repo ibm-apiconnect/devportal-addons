@@ -115,7 +115,7 @@ function apiexplorer_preprocess_node(&$variables) {
             'showSoapCodeSnippets' => variable_get('ibm_apim_soap_codesnippets', FALSE),
             'languages' => $codesnippet_langs,
             'defaultLanguage' => $default_codesnippet_lang,
-            'tryIt' => variable_get('ibm_apim_enable_api_test', 1),
+            'tryIt' => (boolean)variable_get('ibm_apim_enable_api_test', 1),
             'onReady' => 'portalExplorerReady',
             'explorerDir' => base_path() . drupal_get_path('module', 'apiexplorer') . '/explorer/app/',
             'locale' => _ibm_apim_convert_lang_name($language->language),
