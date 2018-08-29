@@ -52,7 +52,7 @@ function apiexplorer_preprocess_node(&$variables) {
       $default_codesnippet_lang = $first_enabled;
     }
     // Get the actual OpenAPI document
-    $api = null;
+    $api = NULL;
     if (isset($variables['api_resources']['und'])) {
       $api = unserialize($variables['api_resources']['und'][0]['value']);
     }
@@ -102,29 +102,47 @@ function apiexplorer_preprocess_node(&$variables) {
         }
       }
     }
+    $infoSectionEntries = array();
+    // also include any attached files such as WSDLs
+    if (isset($variables['api_attachments'])) {
+      $output = drupal_render(field_view_field('node', $variables['node'], 'api_attachments'));
+      $location = 'OVERVIEW';
+      $infoSectionEntries[] = array(
+        'class' => 'Documentation',
+        'html' => $output,
+        'location' => $location
+      );
+    }
+
+    $options = array(
+      'showApiVersion' => (boolean) variable_get('ibm_apim_show_versions', TRUE),
+      'showCorsWarnings' => 1,
+      'showSoapSwaggerDownload' => (boolean) variable_get('ibm_apim_soap_swagger_download', FALSE),
+      'showSoapCodeSnippets' => (boolean) variable_get('ibm_apim_soap_codesnippets', FALSE),
+      'languages' => $codesnippet_langs,
+      'defaultLanguage' => $default_codesnippet_lang,
+      'tryIt' => (boolean) variable_get('ibm_apim_enable_api_test', TRUE),
+      'onReady' => 'portalExplorerReady',
+      'explorerDir' => base_path() . drupal_get_path('module', 'apiexplorer') . '/explorer/app/',
+      'locale' => _ibm_apim_convert_lang_name($language->language),
+      'loggedIn' => user_is_logged_in(),
+      'loginLink' => base_path() . 'user/login',
+      'isApicPortal' => TRUE,
+      'apicPortalUserId' => $user->uid,
+      'apicPortalNewAppLink' => base_path() . 'application/new'
+    );
+
+    if (isset($infoSectionEntries) && !empty($infoSectionEntries)) {
+      $options['infoSectionEntries'] = array($infoSectionEntries);
+    }
+
     // Feed data through to the explorer JS from PHP via DrupalSettings
     drupal_add_js(array(
       'api' => array(
         'explorer' => array(
           'apis' => array($api),
           'apps' => $applications,
-          'options' => array(
-            'showApiVersion' => (boolean)variable_get('ibm_apim_show_versions', TRUE),
-            'showCorsWarnings' => 1,
-            'showSoapSwaggerDownload' => (boolean)variable_get('ibm_apim_soap_swagger_download', FALSE),
-            'showSoapCodeSnippets' => (boolean)variable_get('ibm_apim_soap_codesnippets', FALSE),
-            'languages' => $codesnippet_langs,
-            'defaultLanguage' => $default_codesnippet_lang,
-            'tryIt' => (boolean)variable_get('ibm_apim_enable_api_test', TRUE),
-            'onReady' => 'portalExplorerReady',
-            'explorerDir' => base_path() . drupal_get_path('module', 'apiexplorer') . '/explorer/app/',
-            'locale' => _ibm_apim_convert_lang_name($language->language),
-            'loggedIn' => user_is_logged_in(),
-            'loginLink' => base_path() . 'user/login',
-            'isApicPortal' => TRUE,
-            'apicPortalUserId' => $user->uid,
-            'apicPortalNewAppLink' => base_path() . 'application/new'
-          )
+          'options' => $options
         )
       ),
     ), 'setting');
@@ -215,7 +233,8 @@ function apiexplorer_remove_empty_elements($yaml) {
       if (isset($yaml[$key])) {
         if (is_array($yaml[$key]) && empty($yaml[$key])) {
           unset($yaml[$key]);
-        } elseif (is_array($yaml[$key])) {
+        }
+        elseif (is_array($yaml[$key])) {
           $yaml[$key] = apiexplorer_tidyYaml($yaml[$key]);
         }
       }
@@ -248,7 +267,8 @@ function apiexplorer_tidyYaml(&$yaml) {
       if ($prop == 'schema') {
         if (is_array($yaml[$prop]) && empty($yaml[$prop])) {
           unset($yaml[$prop]);
-        } elseif (is_array($yaml[$prop])) {
+        }
+        elseif (is_array($yaml[$prop])) {
           $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
         }
       }
@@ -259,10 +279,12 @@ function apiexplorer_tidyYaml(&$yaml) {
           if (is_array($yaml) && empty($yaml)) {
             $yaml['type'] = 'object';
           }
-        } elseif (is_array($yaml[$prop])) {
+        }
+        elseif (is_array($yaml[$prop])) {
           $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
         }
-      } elseif (is_array($yaml[$prop])) {
+      }
+      elseif (is_array($yaml[$prop])) {
         $yaml[$prop] = apiexplorer_tidyYaml($yaml[$prop]);
       }
     }
