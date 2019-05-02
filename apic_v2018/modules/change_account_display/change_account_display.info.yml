@@ -1,7 +1,7 @@
-name = Change Account Display
-description = Display firstname lastname instead of username
-package = "Custom"
-core = 7.x
+name: Change Account Display
+description: Display firstname lastname instead of username
+package: Custom
+core: 8.x
 
-version = 1.0
+version: 8.x-1.0.0
 
