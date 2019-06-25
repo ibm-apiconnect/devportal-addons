@@ -48,7 +48,7 @@ function apiexplorer_preprocess_node(&$variables) {
       $default_codesnippet_lang = $user->field_codesnippet['und'][0]['value'];
     }
     // if user's default lang not set or is not one of the enabled ones then default to first enabled
-    if (!isset($default_codesnippet_lang) || !empty($default_codesnippet_lang) || !in_array($default_codesnippet_lang, $codesnippet_langs)) {
+    if (!isset($default_codesnippet_lang) || empty($default_codesnippet_lang) || !in_array($default_codesnippet_lang, $codesnippet_langs)) {
       $default_codesnippet_lang = $first_enabled;
     }
     // Get the actual OpenAPI document
