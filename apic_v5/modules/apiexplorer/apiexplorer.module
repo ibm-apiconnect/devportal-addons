@@ -130,7 +130,8 @@ function apiexplorer_preprocess_node(&$variables) {
       'loginLink' => base_path() . 'user/login',
       'isApicPortal' => TRUE,
       'apicPortalUserId' => $user->uid,
-      'apicPortalNewAppLink' => base_path() . 'application/new'
+      'apicPortalNewAppLink' => base_path() . 'application/new',
+      'optimiseOauthUX' => TRUE,
     );
 
     if (isset($infoSectionEntries) && !empty($infoSectionEntries)) {
