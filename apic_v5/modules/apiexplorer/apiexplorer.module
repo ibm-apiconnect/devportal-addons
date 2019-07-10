@@ -20,18 +20,18 @@ function apiexplorer_preprocess_node(&$variables) {
       // need fully populated user object
       $user = user_load($user->uid);
     }
-    $codesnippets = variable_get('ibm_apim_codesnippets', array(
-      'curl' => 1,
-      'ruby' => 1,
-      'python' => 1,
-      'php' => 1,
-      'java' => 1,
-      'node' => 1,
-      'go' => 1,
-      'swift' => 1,
-      'c' => 0,
-      'csharp' => 0
-    ));
+    $codesnippets = array(
+      'curl' => variable_get('ibm_apim_codesnippets_curl', 1),
+      'ruby' => variable_get('ibm_apim_codesnippets_ruby', 1),
+      'python' => variable_get('ibm_apim_codesnippets_python', 1),
+      'php' => variable_get('ibm_apim_codesnippets_php', 1),
+      'java' => variable_get('ibm_apim_codesnippets_java', 1),
+      'node' => variable_get('ibm_apim_codesnippets_node', 1),
+      'go' => variable_get('ibm_apim_codesnippets_go', 1),
+      'swift' => variable_get('ibm_apim_codesnippets_swift', 1),
+      'c' => variable_get('ibm_apim_codesnippets_c', 0),
+      'csharp' => variable_get('ibm_apim_codesnippets_csharp', 0)
+    );
     $first_enabled = NULL;
     $codesnippet_langs = array();
     foreach ($codesnippets as $lang => $enabled) {
