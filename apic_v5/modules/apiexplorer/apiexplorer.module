@@ -89,7 +89,7 @@ function apiexplorer_preprocess_node(&$variables) {
               }
               $redirectUris = array();
               if (isset($node->application_oauthredirecturi[$node->language][0]['value'])) {
-                $redirectUris[] = $node->application_oauthredirecturi[$node->language][0]['value'];
+                $redirectUris = array_filter(preg_split('/\n|\r\n?/', trim($node->application_oauthredirecturi[$node->language][0]['value'])));
               }
               $applications[] = array(
                 'name' => $node->title,
