@@ -1,0 +1,6 @@
+name: IBM APIC Portal - set apic_state on user
+type: module
+description: IBM API Connect Developer Portal. Set apic_state field on user if it is missing.
+package: IBM API Connect Support
+core: 8.x
+version: 8.x-0.0.1
