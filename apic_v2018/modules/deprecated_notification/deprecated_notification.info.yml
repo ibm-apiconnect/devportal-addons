@@ -1,0 +1,6 @@
+name: Deprecated API Notification
+description: Do something when an API is deprecated
+package: Custom
+core: 8.x
+type: module
+version: 8.x-1.0.0

@@ -1,0 +1,41 @@
+<?php
+
+use Drupal\node\NodeInterface;
+
+/**
+ * This function is called when a product is updated
+ * It is an example how to do something when a product is deprecated
+ *
+ * @param \Drupal\node\NodeInterface $node
+ * @param $data
+ */
+function deprecated_notification_product_update(NodeInterface $node, $data) {
+  if (isset($data['state']) && $data['state'] === 'deprecated') {
+    // do something such as send an email or invoke a REST API
+    // the example below is using some of the code from the mail_subscribers module to email all the consumerorg owners
+    // that are subscribed to any plan of this product
+
+    $mailService = \Drupal::service('mail_subscribers.mail_service');
+    $product_ref = $data['catalog_product']['info']['name'] . ':' . $data['catalog_product']['info']['version'];
+
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $site_config = \Drupal::config('system.site');
+    $from['name'] = $site_config->get('name');
+    $from['mail'] = $site_config->get('mail');
+
+    $message['subject'] = t('Product deprecated');
+    $message['message'] = t('Product @product has been deprecated.', ['@product' => $node->getTitle()]);
+    $message['priority'] = 0;
+    $message['receipt'] = TRUE;
+    $message['headers'] = '';
+    $message['direct'] = TRUE;
+    $message['carbon_copy'] = '';
+
+    // this is the target product to email the subscribers of
+    $message['product'] = $product_ref;
+
+    $rc = $mailService->mailProductMembers($message, $from, $langcode);
+
+    // $rc should include the number of emails sent
+  }
+}
