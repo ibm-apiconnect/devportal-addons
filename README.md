@@ -7,5 +7,5 @@ Modules and themes that are compatible with the IBM API Connect v5 Developer Por
 ### API Explorer
 This module replaces the standard way an API is displayed in the portal with the API Explorer code from APIC v2018.
 
-## IBM API Connect v2018
-Modules and themes that are compatible with the IBM API Connect v2018 Developer Portal.
+## IBM API Connect v2018 / v10
+Modules and themes that are compatible with the IBM API Connect v2018 / v10 Developer Portal.
