@@ -23,10 +23,9 @@ function deprecated_notification_product_update(NodeInterface $node, $data) {
     $from['name'] = $site_config->get('name');
     $from['mail'] = $site_config->get('mail');
     
-    $nodeTitle = (string) $node->getTitle();
-
     $message['subject'] = 'Product deprecated';
-    $message['message'] = "Product $nodeTitle has been deprecated.";
+    $message['message']['format'] = 'plain_text';
+    $message['message']['value'] = "Product $node->getTitle() has been deprecated.";
     $message['priority'] = 0;
     $message['receipt'] = TRUE;
     $message['headers'] = '';
