@@ -25,7 +25,7 @@ function deprecated_notification_product_update(NodeInterface $node, $data) {
     
     $message['subject'] = 'Product deprecated';
     $message['message']['format'] = 'plain_text';
-    $message['message']['value'] = "Product $node->getTitle() has been deprecated.";
+    $message['message']['value'] = "Product $data['catalog_product']['info']['title'] has been deprecated.";
     $message['priority'] = 0;
     $message['receipt'] = TRUE;
     $message['headers'] = '';
