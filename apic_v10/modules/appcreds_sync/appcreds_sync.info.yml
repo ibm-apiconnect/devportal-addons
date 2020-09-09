@@ -1,0 +1,7 @@
+name: Synchronise Application Credentials
+description: Push application credentials (client ids and secrets) to an external server
+package: Custom
+type: module
+version: 8.x-1.0.0
+dependencies:
+  - apic_app

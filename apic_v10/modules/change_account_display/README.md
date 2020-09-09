@@ -6,7 +6,7 @@ In this case it changes the display on a user profile page from being their user
 Further documentation on this scenario and how to use this module can be found in the IBM API Connect Knowledge Center: 
 
 
-### Note: This module requires APIC v2018, it will not work in APIC v5.
+### Note: This module requires APIC v2018 / v10, it will not work in APIC v5.
 
 This module is provided as-is as a sample.
 It is licensed under the GPL v2.
