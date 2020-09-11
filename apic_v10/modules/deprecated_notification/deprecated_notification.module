@@ -29,7 +29,8 @@ function deprecated_notification_product_update(NodeInterface $node, $data) {
     $message['priority'] = 0;
     $message['receipt'] = TRUE;
     $message['headers'] = '';
-    $message['direct'] = TRUE;
+    // this needs to be set to false as direct mail transfer doesnt work when not done as part of a UI flow
+    $message['direct'] = FALSE;
     $message['carbon_copy'] = '';
 
     // this is the target product to email the subscribers of
