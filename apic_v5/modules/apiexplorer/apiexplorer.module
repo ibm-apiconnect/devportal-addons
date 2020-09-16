@@ -122,6 +122,7 @@ function apiexplorer_preprocess_node(&$variables) {
       'languages' => $codesnippet_langs,
       'defaultLanguage' => $default_codesnippet_lang,
       'tryIt' => (boolean) variable_get('ibm_apim_enable_api_test', TRUE),
+      'apiMaxDepth' => 9,
       'showMTLSHeader' => (boolean) variable_get('ibm_apim_show_mtls_header', TRUE),
       'onReady' => 'portalExplorerReady',
       'explorerDir' => base_path() . drupal_get_path('module', 'apiexplorer') . '/explorer/app/',
