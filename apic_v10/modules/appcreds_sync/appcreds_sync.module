@@ -158,8 +158,8 @@ function appcreds_sync_apic_app_clientsecret_reset($appnode, $data, $appId, $cre
  */
 function appcreds_sync_apic_app_subscribe($appnode, $data, $appId, $product_url, $plan, $subId) {
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
-    '%function' => 'appcreds_sync_apic_app_subscrib',
-    '%data' => $appnode->nid,
+    '%function' => 'appcreds_sync_apic_app_subscribe',
+    '%data' => $appId,
   ]);
   // Place code here to do something when this hook runs
 
