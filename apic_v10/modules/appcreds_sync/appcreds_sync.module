@@ -17,9 +17,16 @@
  * @param $data
  */
 function appcreds_sync_apic_app_create($appnode, $data) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_create',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
 
   // could either send $data which is the result from the API Manager create application portal API call the portal made
@@ -34,9 +41,16 @@ function appcreds_sync_apic_app_create($appnode, $data) {
  * @param $data
  */
 function appcreds_sync_apic_app_update($appnode, $data) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_update',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager update application portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -50,9 +64,16 @@ function appcreds_sync_apic_app_update($appnode, $data) {
  * @param $data
  */
 function appcreds_sync_apic_app_delete($appnode, $data) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_delete',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager delete application portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -67,9 +88,16 @@ function appcreds_sync_apic_app_delete($appnode, $data) {
  * @param $credId
  */
 function appcreds_sync_apic_app_creds_create($appnode, $data, $credId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_create',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager create credentials portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -84,9 +112,16 @@ function appcreds_sync_apic_app_creds_create($appnode, $data, $credId) {
  * @param $credId
  */
 function appcreds_sync_apic_app_creds_update($appnode, $data, $credId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_update',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager update credentials portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -101,9 +136,16 @@ function appcreds_sync_apic_app_creds_update($appnode, $data, $credId) {
  * @param $credId
  */
 function appcreds_sync_apic_app_creds_delete($appnode, $data, $credId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_delete',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager delete credentials portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -119,9 +161,16 @@ function appcreds_sync_apic_app_creds_delete($appnode, $data, $credId) {
  * @param $credId
  */
 function appcreds_sync_apic_app_clientid_reset($appnode, $data, $appId, $credId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_clientid_reset',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager client id reset portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -137,9 +186,16 @@ function appcreds_sync_apic_app_clientid_reset($appnode, $data, $appId, $credId)
  * @param $credId
  */
 function appcreds_sync_apic_app_clientsecret_reset($appnode, $data, $appId, $credId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_clientsecret_reset',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager create application portal API call the portal made
   // or $appnode which is the application node in the portal database.
@@ -157,9 +213,16 @@ function appcreds_sync_apic_app_clientsecret_reset($appnode, $data, $appId, $cre
  * @param $subId
  */
 function appcreds_sync_apic_app_subscribe($appnode, $data, $appId, $product_url, $plan, $subId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_subscribe',
-    '%data' => $appId,
+    '%data' => $debug,
   ]);
   // Place code here to do something when this hook runs
 
@@ -176,9 +239,16 @@ function appcreds_sync_apic_app_subscribe($appnode, $data, $appId, $product_url,
  * @param $subId
  */
 function appcreds_sync_apic_app_unsubscribe($appnode, $data, $appId, $product_url, $plan, $subId) {
+  // make sure only log strings
+  if (is_string($appnode->nid)) {
+    $debug = $appnode->nid;
+  }
+  else {
+    $debug = serialize($appnode->nid);
+  }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_unsubscribe',
-    '%data' => $appnode->nid,
+    '%data' => $debug,
   ]);
   // Place code here to do something when this hook runs
 }
@@ -187,6 +257,7 @@ function appcreds_sync_apic_app_unsubscribe($appnode, $data, $appId, $product_ur
  * @param $url
  * @param string $verb
  * @param null $data
+ *
  * @return \stdClass
  * @throws \Exception
  */
@@ -200,7 +271,7 @@ function _appcreds_sync_json_http_request($url, $verb = 'GET', $data = NULL) {
   // do not fall foul of a man-in-the-middle attack.
   $resource = curl_init();
 
-  $headers = array('Authorization: Basic ' . base64_encode('username' . ':' . 'password'));
+  $headers = ['Authorization: Basic ' . base64_encode('username' . ':' . 'password')];
 
   curl_setopt($resource, CURLOPT_URL, $url);
   curl_setopt($resource, CURLOPT_HTTPHEADER, $headers);
@@ -244,7 +315,7 @@ function _appcreds_sync_json_http_request($url, $verb = 'GET', $data = NULL) {
   // Assign the response headers
   $header_size = curl_getinfo($resource, CURLINFO_HEADER_SIZE);
   $header_txt = mb_substr($response, 0, $header_size);
-  $result->headers = array();
+  $result->headers = [];
 
   foreach (explode("\r\n", $header_txt) as $line) {
     $parts = explode(': ', $line);
