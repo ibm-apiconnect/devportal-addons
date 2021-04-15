@@ -103,7 +103,7 @@ class ChangeAccountDisplayController extends ControllerBase {
 
     // if neither firstname nor last name were set then fall back on username
     if (!isset($markup) || empty($markup)) {
-      $markup = $user->getUsername();
+      $markup = $user->getAccountName();
     }
     return $user ? ['#markup' => $markup, '#allowed_tags' => Xss::getHtmlTagList()] : '';
   }
