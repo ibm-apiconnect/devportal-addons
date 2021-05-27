@@ -1,0 +1,10 @@
+name: 'IBM APIC Portal - application department code'
+type: module
+description: 'IBM API Connect Developer Portal tutorial - Example of a custom application field'
+package: 'Custom'
+core_version_requirement: ^8 || ^9
+version: 1.0.0
+project: 'app_dept_code'
+dependencies:
+  - ibm_apim
+  - apic_app

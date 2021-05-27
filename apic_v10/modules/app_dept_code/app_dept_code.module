@@ -1,0 +1,30 @@
+<?php
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implementation of hook_form_alter() to alter the application create form
+ */
+function app_dept_code_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'application_create_form' || $form_id === 'modal_application_create_form') {
+    // add our validator to the #validate array for the app create forms
+    $form['#validate'][] = 'app_dept_code_validate_department_code';
+  }
+}
+
+/**
+ * Validate the Department code field on the app create form.
+ *
+ * Valid entry = DEPnnn
+ *   where n = single figure digit.
+ */
+function app_dept_code_validate_department_code($form, &$form_state) {
+  if (isset($form_state->getValue('field_dept_code')[0]['value'])) {
+    $dept_code = $form_state->getValue('field_dept_code')[0]['value'];
+    $valid = preg_match('/^DEP\d{3}$/', $dept_code);
+    if (!$valid) {
+      // if the value is not valid then set an inline error on the relevant field
+      $form_state->setErrorByName('field_dept_code', t('Invalid department code. Must be DEPnnn, e.g. DEP123'));
+    }
+  }
+}
+
