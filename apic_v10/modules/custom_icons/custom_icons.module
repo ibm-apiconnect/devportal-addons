@@ -1,0 +1,68 @@
+<?php
+
+use Drupal\Core\Url;
+
+/**
+ * @param $returnValue
+ */
+function custom_icons_product_getplaceholderimage_alter(&$returnValue) {
+  // this uses the default image url as the input to the get random name function in this module
+  // this should mean that the same api/product gets the same custom icon every time
+  $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
+  $returnValue = Url::fromUri('internal:/' . drupal_get_path('module', 'custom_icons') . '/images/' . _custom_image_getRandomImageName($name))
+    ->toString();
+}
+
+/**
+ * @param $returnValue
+ */
+function custom_icons_product_getplaceholderimageurl_alter(&$returnValue) {
+  // this uses the default image url as the input to the get random name function in this module
+  // this should mean that the same api/product gets the same custom icon every time
+  $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
+  $rawImage = _custom_image_getRandomImageName($name);
+  $returnValue = base_path() . drupal_get_path('module', 'custom_icons') . '/images/' . $rawImage;
+}
+
+/**
+ * @param $returnValue
+ */
+function custom_icons_api_getplaceholderimage_alter(&$returnValue) {
+  // this uses the default image url as the input to the get random name function in this module
+  // this should mean that the same api/product gets the same custom icon every time
+  $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
+  $returnValue = Url::fromUri('internal:/' . drupal_get_path('module', 'custom_icons') . '/images/' . _custom_image_getRandomImageName($name))
+    ->toString();
+}
+
+/**
+ * @param $returnValue
+ */
+function custom_icons_api_getplaceholderimageurl_alter(&$returnValue) {
+  // this uses the default image url as the input to the get random name function in this module
+  // this should mean that the same api/product gets the same custom icon every time
+  $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
+  $rawImage = _custom_image_getRandomImageName($name);
+  $returnValue = base_path() . drupal_get_path('module', 'custom_icons') . '/images/' . $rawImage;
+}
+
+/**
+ * @param $name
+ *
+ * @return string - icon for a given name
+ */
+function _custom_image_getRandomImageName($name): string {
+  $asInt = 0;
+  $strLength = mb_strlen($name);
+  for ($i = 0; $i < $strLength; $i++) {
+    $asInt += \ord($name[$i]);
+  }
+  $digit = $asInt % 19;
+  if ($digit === 0) {
+    $digit = 1;
+  }
+  $num = str_pad($digit, 2, 0, STR_PAD_LEFT);
+
+  return 'custom_' . $num . '.png';
+}
+

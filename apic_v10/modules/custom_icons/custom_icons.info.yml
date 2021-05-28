@@ -1,0 +1,9 @@
+name: 'IBM APIC Portal - custom icons'
+type: module
+description: 'IBM API Connect Developer Portal tutorial - Example of custom product icons'
+package: 'Custom'
+core_version_requirement: ^8 || ^9
+version: 1.0.0
+project: 'custom_icons'
+dependencies:
+  - ibm_apim
