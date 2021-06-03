@@ -1,0 +1,6 @@
+domain_block.settings:
+  title: 'Domain Block Settings'
+  route_name: domain_block.settings
+  parent: system.admin_config_system
+  description: 'User domain block configuration.'
+  weight: 30

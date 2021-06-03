@@ -1,0 +1,59 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implementation of hook_form_alter() to alter the Sign up form
+ */
+function domain_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'user_register_form') {
+    // add our validator to the #validate array for the user_register_form
+    $form['#validate'][] = 'domain_block_validate_email';
+  }
+  elseif ($form_id === 'consumerorg_invite_user_form') {
+    // add our validator to the #validate array for the invitation form
+    $form['#validate'][] = 'domain_block_validate_invite_email';
+  }
+}
+
+/**
+ * Validate the email address field on the Sign up form.
+ *
+ */
+function domain_block_validate_email($form, &$form_state) {
+  $email = $form_state->getValue('mail');
+
+  $config_setting = \Drupal::config('domain_block.settings')->get('banned_domains');
+  $blocked_array = preg_split('/\R/', $config_setting);
+
+  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    // split on @ and return last value of array (the domain)
+    $emailParts = explode('@', $email);
+    $domain = end($emailParts);
+    if (in_array($domain, $blocked_array, TRUE)) {
+      // if the value is not valid then set an inline error on the relevant field
+      $form_state->setErrorByName('mail', t('Use of this email domain is blocked on this site.'));
+    }
+  }
+}
+
+/**
+ * Validate the email address field on the Sign up form.
+ *
+ */
+function domain_block_validate_invite_email($form, &$form_state) {
+  $email = $form_state->getValue('new_email');
+
+  $config_setting = \Drupal::config('domain_block.settings')->get('banned_domains');
+  $blocked_array = preg_split('/\R/', $config_setting);
+
+  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    // split on @ and return last value of array (the domain)
+    $emailParts = explode('@', $email);
+    $domain = end($emailParts);
+    if (in_array($domain, $blocked_array, TRUE)) {
+      // if the value is not valid then set an inline error on the relevant field
+      $form_state->setErrorByName('new_email', t('Use of this email domain is blocked on this site.'));
+    }
+  }
+}

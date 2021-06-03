@@ -1,0 +1,7 @@
+domain_block.settings:
+  path: '/admin/config/system/domain_block'
+  defaults:
+    _form: 'Drupal\domain_block\Form\ConfigForm'
+    _title: 'Domain Block Settings'
+  requirements:
+    _permission: 'administer_apic'
