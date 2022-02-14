@@ -13,7 +13,7 @@ class ConfigForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormID(): string {
+  public function getFormId(): string {
     return 'domain_block_config_settings';
   }
 
