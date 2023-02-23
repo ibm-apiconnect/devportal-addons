@@ -1,7 +1,7 @@
-name: Change Account Display
+name: IBM APIC Portal - Change Account Display
 description: Display firstname lastname instead of username
 package: Custom
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 type: module
 version: 1.0.0
 

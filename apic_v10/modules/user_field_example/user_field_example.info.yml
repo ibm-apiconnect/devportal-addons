@@ -2,7 +2,7 @@ name: 'IBM APIC Portal - user field example'
 type: module
 description: 'IBM API Connect Developer Portal tutorial - Example of validating a custom user field'
 package: 'Custom'
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 version: 1.0.0
 project: 'user_field_example'
 dependencies:

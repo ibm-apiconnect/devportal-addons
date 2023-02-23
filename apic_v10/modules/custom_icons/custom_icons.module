@@ -9,7 +9,8 @@ function custom_icons_product_getplaceholderimage_alter(&$returnValue) {
   // this uses the default image url as the input to the get random name function in this module
   // this should mean that the same api/product gets the same custom icon every time
   $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
-  $returnValue = Url::fromUri('internal:/' . drupal_get_path('module', 'custom_icons') . '/images/' . _custom_image_getRandomImageName($name))
+  $iconPath = \Drupal::service('extension.list.module')->getPath('custom_icons');
+  $returnValue = Url::fromUri('internal:/' . $iconPath . '/images/' . _custom_image_getRandomImageName($name))
     ->toString();
 }
 
@@ -19,9 +20,10 @@ function custom_icons_product_getplaceholderimage_alter(&$returnValue) {
 function custom_icons_product_getplaceholderimageurl_alter(&$returnValue) {
   // this uses the default image url as the input to the get random name function in this module
   // this should mean that the same api/product gets the same custom icon every time
+  $iconPath = \Drupal::service('extension.list.module')->getPath('custom_icons');
   $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
   $rawImage = _custom_image_getRandomImageName($name);
-  $returnValue = base_path() . drupal_get_path('module', 'custom_icons') . '/images/' . $rawImage;
+  $returnValue = base_path() . $iconPath . '/images/' . $rawImage;
 }
 
 /**
@@ -30,8 +32,9 @@ function custom_icons_product_getplaceholderimageurl_alter(&$returnValue) {
 function custom_icons_api_getplaceholderimage_alter(&$returnValue) {
   // this uses the default image url as the input to the get random name function in this module
   // this should mean that the same api/product gets the same custom icon every time
+  $iconPath = \Drupal::service('extension.list.module')->getPath('custom_icons');
   $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
-  $returnValue = Url::fromUri('internal:/' . drupal_get_path('module', 'custom_icons') . '/images/' . _custom_image_getRandomImageName($name))
+  $returnValue = Url::fromUri('internal:/' . $iconPath . '/images/' . _custom_image_getRandomImageName($name))
     ->toString();
 }
 
@@ -41,9 +44,10 @@ function custom_icons_api_getplaceholderimage_alter(&$returnValue) {
 function custom_icons_api_getplaceholderimageurl_alter(&$returnValue) {
   // this uses the default image url as the input to the get random name function in this module
   // this should mean that the same api/product gets the same custom icon every time
+  $iconPath = \Drupal::service('extension.list.module')->getPath('custom_icons');
   $name = preg_replace("/[^A-Za-z0-9]/", '', $returnValue);
   $rawImage = _custom_image_getRandomImageName($name);
-  $returnValue = base_path() . drupal_get_path('module', 'custom_icons') . '/images/' . $rawImage;
+  $returnValue = base_path() . $iconPath . '/images/' . $rawImage;
 }
 
 /**
