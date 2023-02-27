@@ -3,4 +3,4 @@ type: module
 description: IBM API Developer Portal. Set apic_state field on user if it is missing.
 package: IBM API Developer Portal Support
 core_version_requirement: ^8 || ^9 || ^10
-version: 1.0.1
+version: 1.0.2

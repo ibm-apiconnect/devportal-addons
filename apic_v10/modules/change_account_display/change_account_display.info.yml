@@ -3,5 +3,5 @@ description: Display firstname lastname instead of username
 package: Custom
 core_version_requirement: ^8 || ^9 || ^10
 type: module
-version: 1.0.0
+version: 1.0.1
 

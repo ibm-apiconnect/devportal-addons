@@ -3,7 +3,7 @@ type: module
 description: 'IBM API Connect Developer Portal tutorial - Example of custom product icons'
 package: 'Custom'
 core_version_requirement: ^8 || ^9 || ^10
-version: 1.0.0
+version: 1.0.1
 project: 'custom_icons'
 dependencies:
   - ibm_apim

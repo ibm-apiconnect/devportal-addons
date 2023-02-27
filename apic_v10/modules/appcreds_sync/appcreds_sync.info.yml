@@ -3,6 +3,6 @@ description: Push application credentials (client ids and secrets) to an externa
 package: Custom
 core_version_requirement: ^8 || ^9 || ^10
 type: module
-version: 1.0.0
+version: 1.0.1
 dependencies:
   - apic_app

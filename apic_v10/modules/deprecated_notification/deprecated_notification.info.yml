@@ -3,4 +3,4 @@ description: Do something when an API is deprecated
 package: Custom
 core_version_requirement: ^8 || ^9 || ^10
 type: module
-version: 1.0.0
+version: 1.0.1
