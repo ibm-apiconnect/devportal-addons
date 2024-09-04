@@ -13,16 +13,16 @@
 /**
  * Implementation of hook_apic_app_create
  *
- * @param $appnode
+ * @param $node
  * @param $data
  */
-function appcreds_sync_apic_app_create($appnode, $data) {
+function appcreds_sync_apic_app_create($node, $data) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_create',
@@ -30,195 +30,195 @@ function appcreds_sync_apic_app_create($appnode, $data) {
   ]);
 
   // could either send $data which is the result from the API Manager create application portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/create', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_update
  *
- * @param $appnode
+ * @param $node
  * @param $data
  */
-function appcreds_sync_apic_app_update($appnode, $data) {
+function appcreds_sync_apic_app_update($node, $data) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_update',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager update application portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/update', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_delete
  *
- * @param $appnode
+ * @param $node
  * @param $data
  */
-function appcreds_sync_apic_app_delete($appnode, $data) {
+function appcreds_sync_apic_app_delete($node, $data, $appId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_delete',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager delete application portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/delete', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_creds_create
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $credId
  */
-function appcreds_sync_apic_app_creds_create($appnode, $data, $credId) {
+function appcreds_sync_apic_app_creds_create($node, $data, $credId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_create',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager create credentials portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/create', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_creds_update
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $credId
  */
-function appcreds_sync_apic_app_creds_update($appnode, $data, $credId) {
+function appcreds_sync_apic_app_creds_update($node, $data, $credId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_update',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager update credentials portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/update', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_creds_delete
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $credId
  */
-function appcreds_sync_apic_app_creds_delete($appnode, $data, $credId) {
+function appcreds_sync_apic_app_creds_delete($node, $data, $credId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_creds_delete',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager delete credentials portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/delete', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_clientid_reset
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $appId
  * @param $credId
  */
-function appcreds_sync_apic_app_clientid_reset($appnode, $data, $appId, $credId) {
+function appcreds_sync_apic_app_clientid_reset($node, $data, $appId, $credId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_clientid_reset',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager client id reset portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/clientid/reset', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_clientsecret_reset
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $appId
  * @param $credId
  */
-function appcreds_sync_apic_app_clientsecret_reset($appnode, $data, $appId, $credId) {
+function appcreds_sync_apic_app_clientsecret_reset($node, $data, $appId, $credId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_clientsecret_reset',
     '%data' => $debug,
   ]);
   // could either send $data which is the result from the API Manager create application portal API call the portal made
-  // or $appnode which is the application node in the portal database.
+  // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/clientsecret/reset', 'POST', json_encode($data));
 }
 
 /**
  * Implementation of hook_apic_app_subscribe
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $appId
  * @param $product_url
  * @param $plan
  * @param $subId
  */
-function appcreds_sync_apic_app_subscribe($appnode, $data, $appId, $product_url, $plan, $subId) {
+function appcreds_sync_apic_app_subscribe($node, $data, $appId, $product_url, $plan, $subId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_subscribe',
@@ -231,20 +231,20 @@ function appcreds_sync_apic_app_subscribe($appnode, $data, $appId, $product_url,
 /**
  * Implementation of hook_apic_app_unsubscribe
  *
- * @param $appnode
+ * @param $node
  * @param $data
  * @param $appId
  * @param $product_url
  * @param $plan
  * @param $subId
  */
-function appcreds_sync_apic_app_unsubscribe($appnode, $data, $appId, $product_url, $plan, $subId) {
+function appcreds_sync_apic_app_unsubscribe($node, $data, $appId, $product_url, $plan, $subId) {
   // make sure only log strings
-  if (is_string($appnode->nid)) {
-    $debug = $appnode->nid;
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
   }
   else {
-    $debug = serialize($appnode->nid);
+    $debug = serialize($node->nid);
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_unsubscribe',
