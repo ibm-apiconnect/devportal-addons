@@ -1,7 +1,7 @@
 name: IBM APIC Portal - Synchronise Application Credentials
 description: Push application credentials (client ids and secrets) to an external server
 package: Custom
-core_version_requirement: ^8 || ^9 || ^10 || ^11
+core_version_requirement: ^8 || ^9 || ^10
 type: module
 version: 1.0.1
 dependencies:
