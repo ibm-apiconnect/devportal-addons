@@ -81,6 +81,52 @@ function appcreds_sync_apic_app_delete($node, $data, $appId) {
 }
 
 /**
+ * Implementation of hook_apic_app_pre_delete
+ *
+ * @param $node
+ * @param $data
+ */
+function appcreds_sync_apic_app_pre_delete($node, $data) {
+  // make sure only log strings
+  if (is_string($node->nid)) {
+    $debug = $node->nid;
+  }
+  else {
+    $debug = serialize($node->nid);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_pre_delete',
+    '%data' => $debug,
+  ]);
+  // could either send $data which is the result from the API Manager delete application portal API call the portal made
+  // or $node which is the application node in the portal database.
+  _appcreds_sync_json_http_request('http://example.com/app/delete', 'POST', json_encode($data));
+}
+
+
+/**
+ * Implementation of hook_apic_app_post_delete
+ *
+ * @param $data
+ */
+function appcreds_sync_apic_app_post_delete($data) {
+  // make sure only log strings
+  if (is_string($data)) {
+    $debug = $data;
+  }
+  else {
+    $debug = serialize($data);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_post_delete',
+    '%data' => $debug,
+  ]);
+  // could either send $data which is the result from the API Manager delete application portal API call the portal made
+  // or $node which is the application node in the portal database.
+  _appcreds_sync_json_http_request('http://example.com/app/delete', 'POST', json_encode($data));
+}
+
+/**
  * Implementation of hook_apic_app_creds_create
  *
  * @param $node
@@ -150,6 +196,44 @@ function appcreds_sync_apic_app_creds_delete($node, $data, $credId) {
   // could either send $data which is the result from the API Manager delete credentials portal API call the portal made
   // or $node which is the application node in the portal database.
   _appcreds_sync_json_http_request('http://example.com/app/creds/delete', 'POST', json_encode($data));
+}
+
+/**
+ * Implementation of hook_apic_app_credential_pre_delete
+ * 
+ * @param $credId
+ */
+function appcreds_sync_apic_app_credential_pre_delete($credId) {
+  // make sure only log strings
+  if (is_string($credId)) {
+    $debug = $credId;
+  }
+  else {
+    $debug = serialize($credId);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_credential_pre_delete',
+    '%data' => $debug,
+  ]);
+}
+
+/**
+ * Implementation of hook_apic_app_credential_post_delete
+ *
+ * @param $credId
+ */
+function appcreds_sync_apic_app_credential_post_delete($credId) {
+  // make sure only log strings
+  if (is_string($credId)) {
+    $debug = $credId;
+  }
+  else {
+    $debug = serialize($credId);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_credential_post_delete',
+    '%data' => $debug,
+  ]);
 }
 
 /**
