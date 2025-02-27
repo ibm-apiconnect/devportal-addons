@@ -59,7 +59,7 @@ function appcreds_sync_apic_app_update($node, $data) {
 
 /**
  * Implementation of hook_apic_app_delete
- *
+ * @deprecated please use hook_apic_app_pre_delete and hook_apic_app_post_delete hooks.
  * @param $node
  * @param $data
  */
@@ -176,7 +176,7 @@ function appcreds_sync_apic_app_creds_update($node, $data, $credId) {
 
 /**
  * Implementation of hook_apic_app_creds_delete
- *
+ * @deprecated please use hook_apic_app_credential_pre_delete and hook_apic_app_credential_post_delete hooks.
  * @param $node
  * @param $data
  * @param $credId
@@ -232,6 +232,47 @@ function appcreds_sync_apic_app_credential_post_delete($credId) {
   }
   \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
     '%function' => 'appcreds_sync_apic_app_credential_post_delete',
+    '%data' => $debug,
+  ]);
+}
+
+/**
+ * Implementation of hook_apic_app_modify_create_alter
+ *
+ * @param $data
+ * @param $appId
+ * @param $formState
+ */
+function hook_apic_app_modify_create_alter(&$data, $appId, $formState) {
+  // make sure only log strings
+  if (is_string($appId)) {
+    $debug = $appId;
+  }
+  else {
+    $debug = serialize($appId);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_modify_create_alter',
+    '%data' => $debug,
+  ]);
+}
+
+/**
+ * Implementation of hook_apic_app_modify_credentials_create_alter
+ *
+ * @param $data
+ * @param $appId
+ */
+function hook_apic_app_modify_credentials_create_alter(&$data, $appId) {
+  // make sure only log strings
+  if (is_string($appId)) {
+    $debug = $appId;
+  }
+  else {
+    $debug = serialize($appId);
+  }
+  \Drupal::logger('appcreds_sync')->debug('%function hook invoked for: %data.', [
+    '%function' => 'appcreds_sync_apic_app_modify_credentials_create_alter',
     '%data' => $debug,
   ]);
 }
