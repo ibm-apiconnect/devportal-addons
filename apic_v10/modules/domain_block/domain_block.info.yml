@@ -2,7 +2,7 @@ name: 'IBM APIC Portal - domain block'
 type: module
 description: 'IBM API Connect Developer Portal tutorial - Domain Block'
 package: 'Custom'
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^8 || ^9 || ^10 || ^11
 version: 1.0.1
 project: 'domain_block'
 dependencies:
