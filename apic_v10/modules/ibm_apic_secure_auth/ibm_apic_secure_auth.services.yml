@@ -1,0 +1,5 @@
+services:
+  ibm_apic_secure_auth.route_subscriber:
+    class: Drupal\ibm_apic_secure_auth\Routing\IbmApicAuthRouteSubscriber
+    tags:
+      - { name: event_subscriber }

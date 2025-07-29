@@ -1,0 +1,9 @@
+name: IBM API Secure Authentication
+type: module
+description: Provide an authentication based on email without a user registry selection.
+package: IBM API Developer Portal
+core_version_requirement: ^10 || ^11
+version: 1.0.1
+project: ibm_apic_secure_auth
+dependencies:
+  - auth_apic
